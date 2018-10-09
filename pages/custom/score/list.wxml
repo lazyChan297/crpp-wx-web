@@ -1,0 +1,38 @@
+<scroll-view scroll-y="true" class='list' bindscrolltolower="loadMore">
+  <view class="item" wx:for="{{score}}">
+    <view class="column-list head ">
+      <text class="black3">订单号</text>
+      <text class="black3">{{item.ord_num}}</text>
+      <text class="column-item black3" wx:if="{{item.type==help}}">帮我送</text>
+      <text class="column-item black3" wx:if="{{item.type==buy}}">帮我买</text>
+      <view class="column-item star-list" style="display:block;">
+      <i class="star1" wx:if="{{item.score>=1}}"></i>
+      <i class="star2" wx:if="{{item.score>=2}}"></i>
+      <i class="star3" wx:if="{{item.score>=3}}"></i>
+      <i class="star4" wx:if="{{item.score>=4}}"></i>
+      <i class="star5" wx:if="{{item.score>=5}}"></i>
+      </view>
+    </view>
+    <view class="order-info">
+          <view class="address">
+            <view class="pick">
+              <view>
+                <text class="yellow-cycle">取</text>
+              </view>
+              <text class="black3" style="flex:1">{{item.address_from}}</text>
+            </view>
+            <view class="send">
+              <text class="yellow-cycle">送</text>
+              <text class="black3">{{item.address_to}}</text>
+            </view>
+          </view>
+        </view>
+    <view class="score-info" wx:if="{{!item.content}}">
+      <text class="gray9" >没有评价内容哎</text>
+    </view>
+    <view class="score-info" wx:if="{{item.content}}">
+      <text class="yellow">{{item.content}}</text>
+    </view>
+  </view>
+  <view wx:if="{{!score}}" class="empty"></view>
+</scroll-view>

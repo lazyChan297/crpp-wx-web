@@ -1,0 +1,36 @@
+<form class="scoreForm">
+  <view class="black30">服务评分</view>
+  <view class="star-list">
+    <i wx:for="{{score}}" bindtap="score" data-title="{{item.title}}" data-index="{{item.index}}" data-tag="{{item.tag}}" class="{{currentIndex>=item.index?item._class:' '}}"></i>
+  </view>
+  <view class="gray30">{{scoreText}}</view>
+  
+    <view class="tag-list" wx:if="{{currentIndex}}">
+    <text wx:for="{{scoreTag}}" class="{{item.heightLight?'active':''}}" bindtap='addTag' data-txt="{{item.txt}}" data-index="{{index}}" data-index="{{index}}" data-heightlight="{{item.heightLight}}">{{item.txt}}</text>
+   </view>  
+  <view class="column-list">
+  <textarea placeholder='说说您对本次服务的看法' placeholder-class='placeholder' class="column-item" value='{{scoreContent}}' bindinput='inputchange' focus="{{focus}}"></textarea>
+  </view>
+  <navigator plain='false' class="large-btn-yellow" url="" bindtap='save'>发布</navigator>
+</form>
+
+<view class="bgw">
+<view class="column-list">
+  <text class="gray28">{{orderInfo.order.ordNum}}</text>
+  <text class="gray28" wx:if="{{orderInfo.order.type=='help'}}">帮我送</text>
+  <text class="gray28" wx:if="{{orderInfo.order.type=='buy'}}">帮我买</text>
+  <text class="gray28 column-item txr">配送员: </text>
+  <text class="gray28">{{orderInfo.order.markiUser}}</text>
+</view>
+<view class="order-info">
+    <view class="address">
+      <view class="pick" style="padding-bottom:30rpx;">
+        <text class="yellow-cycle">取</text>
+        <text class="black3">{{orderInfo.fromAddr.address}}</text></view>
+      <view><text class="yellow-cycle">送</text><text class="black3">{{orderInfo.toAddr.address}}</text></view>
+    </view>
+  </view>
+  <view class="column-list mt20"><text class="gray26">取货时间: </text><text class="gray26">{{orderInfo.order.getTime}}</text></view>
+  <view class="column-list"><text class="gray26">送达时间: </text><text class="gray26">{{orderInfo.order.finishTime}}</text></view>
+  </view>
+

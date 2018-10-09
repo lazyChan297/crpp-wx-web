@@ -1,0 +1,75 @@
+{
+  "pages": [
+    "pages/index/entry",
+    "pages/index/index",
+    "pages/test/test",
+    "pages/custom/center/center",
+    "pages/custom/order/list",
+    "pages/custom/order/detail",
+    "pages/custom/address/search",
+    "pages/custom/address/add",
+    "pages/custom/score/list",
+    "pages/custom/score/add",
+    "pages/custom/score/detail",
+    "pages/custom/bindPhone/bindPhone",
+    "pages/custom/help/question",
+    "pages/custom/help/answer",
+    "pages/delivery/center/center",
+    "pages/delivery/login/login",
+    "pages/delivery/task/list",
+    "pages/delivery/task/detail",
+    "pages/delivery/task/map",
+    "pages/delivery/order/order",
+    "pages/delivery/help/question",
+    "pages/delivery/help/answer",
+    "pages/delivery/system/system",
+    "pages/custom/login/login",
+    "pages/delivery/statistics/statistics",
+    "pages/custom/address/pick",
+    "pages/custom/order/detail1",
+    "pages/custom/center/updateName",
+    "pages/custom/login/agreement",
+    "pages/delivery/statistics/payment",
+    "pages/delivery/task/task",
+    "pages/delivery/turn/list",
+    "pages/delivery/turn/search",
+    "pages/logs/logs",
+    "pages/camera/camera",
+    "pages/camera/canvas"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#ffc629",
+    "navigationBarTitleText": "超人跑跑",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#000000",
+    "enablePullDownRefresh": true
+  },
+  "tabBar": {
+    "color": "#666666",
+    "selectedColor": "#fcb900",
+    "borderStyle": "black",
+    "backgroundColor": "#fff",
+    "position": "bottom",
+    "list": [
+      {
+        "text": "首页",
+        "pagePath": "pages/index/index",
+        "iconPath": "images/zhuye.png",
+        "selectedIconPath": "images/hlzhuye.png"
+      },
+      {
+        "text": "我的订单",
+        "pagePath": "pages/custom/order/list",
+        "iconPath": "images/wodedingdan.png",
+        "selectedIconPath": "images/hlwodedingdan.png"
+      },
+      {
+        "text": "个人中心",
+        "pagePath": "pages/custom/center/center",
+        "iconPath": "images/gerenzhongxin.png",
+        "selectedIconPath": "images/hlgerenzhongxin.png"
+      }
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+<!--pages/custom/bindPhone/bindPhone.wxml-->
+<view>
+  <form class="table">
+    <view>
+      <view class="column-list">
+        <input class='column-item' placeholder='{{placeholder}}' placeholder-class='placeholder' bindinput='phoneChange' value="{{phone}}"></input>
+      </view>
+      <view class="column-list">
+        <input class='column-item' placeholder='请输入4位数验证码' placeholder-class='placeholder' bindinput='codeChange' value='{{code}}'></input>
+        <button plain='false' hover-class='none' bindtap='getCode' class="{{disable?'small-btn-gray':'small-btn-yellow'}}">{{codeTxt}}</button>
+      </view>
+      <checkbox-group bindchange="checkboxChange" class="checkbox-group" wx:if="{{hidden}}">
+        <label class="checkbox">
+          <checkbox value="{{agree}}" checked="false" class='wx-checkbox-input' />
+        </label>
+        <text class="black">我已阅读并同意</text>
+        <text class="blue" bindtap='goAgreement'>《超人跑跑注册协议》</text>
+      </checkbox-group>
+      
+    </view>
+    <view class="b-button">
+      <button bindtap='save' plain='false' class="large-btn-yellow">{{buttonTxt}}</button>
+    </view>
+  </form>
+</view>

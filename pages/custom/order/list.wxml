@@ -1,0 +1,216 @@
+<scroll-view scroll-y="true" style="height:{{pageHeight}}px" bindscrolltolower="loadMore">
+  <view class="column-list tab">
+    <view class="{{currentIndex == 1?'column-item active':'column-item'}}" data-index="1" bindtap='switchTab'>全部</view>
+    <view class="{{currentIndex == 2?'column-item active':'column-item'}}" data-index="2" bindtap='switchTab' data-status="wait_pay">待付款</view>
+    <view class="{{currentIndex == 3?'column-item active':'column-item'}}" data-index="3" bindtap='switchTab' data-status="wait_get">待取货</view>
+    <view class="{{currentIndex == 4?'column-item active':'column-item'}}" data-index='4' bindtap='switchTab' data-status="delivering">待送货</view>
+    <view class="{{currentIndex == 5?'column-item active':'column-item'}}" data-index='5' bindtap='switchTab' data-status="finish">已完成</view>
+  </view>
+  <view class="empty" wx:if="{{isEmpty}}"></view>
+  <view class="list">
+    <!--全部  -->
+    <block wx:if="{{currentIndex==1}}">
+      <navigator class="item" url="detail?id={{item.id}}&type={{item.type}}" wx:for="{{all_list}}">
+        <view class="column-list">
+          <text class="mr">订单号：</text>
+          <text class="mr">{{item.ord_num}}</text>
+          <text wx:if="{{item.type=='help'}}" class="ml">帮我送</text>
+          <text class="ml" wx:else>帮我买</text>
+          <text class='column-item' wx:if="{{item.status=='wait_rec'}}">待派单</text>
+          <text class='column-item' wx:if="{{item.status=='wait_pay'}}">待付款</text>
+          <text class='column-item' wx:if="{{item.status=='wait_get'}}">待取货</text>
+          <text class='column-item' wx:if="{{item.status=='delivering'}}">待送货</text>
+          <text class='column-item' wx:if="{{item.status=='finish'}}">已完成</text>
+        </view>
+        <view class="order-info">
+          <view class="address">
+            <view class="pick">
+              <view>
+                <text class="{{(item.status=='wait_get')||(item.status=='wait_pay')||(item.status == 'wait_rec')?'gray-cycle':'yellow-cycle'}}">收</text>
+              </view>
+              <text class="black3" style="flex:1">{{item.from_address}}</text>
+            </view>
+            <view class="send">
+              <text class="{{item.status=='finish'?'yellow-cycle':'gray-cycle'}}">发</text>
+              <text class="black3">{{item.to_address}}</text>
+            </view>
+          </view>
+        </view>
+        <view class="float-list" wx:if="{{item.status=='wait_rec'}}">
+          <text class="float-item-left yellow">工作人员将电话联系您确认订单,请您留意接听电话!</text>
+        </view>
+        <view class="float-list" wx:if="{{item.status=='wait_get'}}">
+          <text class="float-item-left" wx:if="{{item.remain_time <= 0}}">剩余{{item.remain_time}}分钟</text>
+          <text class="float-item-left red" wx:if="{{item.remain_time > 0}} ">超时{{item.remain_time}}分钟</text>
+
+          <button class="float-item-right middle-btn-yellow" plain='false' bindtap='makePhoneCall' data-phone="{{item.mobiletel}}">联系配送员</button>
+          <button class="float-item-right middle-btn-yellow" plain='false' data-id="{{item.id}}" catchtap='reminderOrd'>我要催单</button>
+        </view>
+        <view class="float-list" wx:if="{{item.status=='wait_pay'}}">
+          <button class="float-item-right middle-btn-yellow" wx:if="{{item.status=='wait_pay'}}" plain='false' catchtap='return false' hover-class='none' data-id="{{item.id}}" catchtap='ordPay'>立即付款</button>
+        </view>
+        <view class="float-list" wx:if="{{item.status=='finish'&&item.evaluation_status=='wait'}}">
+          <button class="float-item-right middle-btn-yellow" bindtap="addScore" data-info="{{item}}" plain='false'>立即评价</button>
+        </view>
+      </navigator>
+    </block>
+    <!--待付款  -->
+    <block wx:elif="{{currentIndex==2}}">
+      <navigator class="item" wx:for="{{all_list}}" url="detail?id={{item.id}}">
+        <view class="column-list">
+          <text class="mr">订单号：</text>
+          <text class="mr">{{item.ord_num}}</text>
+          <text wx:if="{{item.type=='help'}}" class="ml">帮我送</text>
+          <text class="ml" wx:else>帮我买</text>
+          <text class='column-item'>待付款</text>
+        </view>
+        <view class="order-info">
+          <view class="address">
+            <view class="pick">
+              <view>
+                <text class="gray-cycle">收</text>
+              </view>
+              <text class="black3" style="flex:1">{{item.from_address}}</text>
+            </view>
+            <view class="send">
+              <text class="gray-cycle">发</text>
+              <text class="black3">{{item.to_address}}</text>
+            </view>
+          </view>
+        </view>
+        <view class="float-list">
+          <button class="float-item-right middle-btn-yellow" wx:if="{{item.status=='wait_pay'}}" plain='false' hover-class='none' data-id="{{item.id}}" catchtap='ordPay'>立即付款</button>
+        </view>
+      </navigator>
+    </block>
+    <!--待取货  -->
+    <block wx:elif="{{currentIndex==3}}">
+      <navigator class="item" wx:for="{{all_list}}" url="detail?id={{item.id}}">
+        <view class="column-list">
+          <text class="mr">订单号：</text>
+          <text class="mr">{{item.ord_num}}</text>
+          <text wx:if="{{item.type=='help'}}" class="ml">帮我送</text>
+          <text class="ml" wx:else>帮我买</text>
+          <text class='column-item'>待取货</text>
+        </view>
+        <view class="order-info">
+          <view class="address">
+            <view class="pick">
+              <view>
+                <text class="gray-cycle">收</text>
+              </view>
+              <text class="black3">{{item.from_address}}</text>
+            </view>
+            <view class="send">
+              <text class="gray-cycle">发</text>
+              <text class="black3">{{item.to_address}}</text>
+            </view>
+          </view>
+
+        </view>
+        <view class="float-list">
+          <text class="float-item-left black3"  wx:if="{{item.isLate}}">超时{{item.remain_time}}分钟</text>
+          <text class="float-item-left black3"  wx:if="{{!item.isLate&&item.remain_time}}">剩余{{item.remain_time}}分钟</text>
+          
+          <button class="float-item-right middle-btn-yellow" plain='false' catchtap='makePhoneCall' data-phone="{{item.mobiletel}}">联系配送员</button>
+          <button class="float-item-right middle-btn-yellow" plain='false' catchtap='reminderOrd' data-id="{{item.id}}">我要催单</button>
+        </view>
+      </navigator>
+    </block>
+    <!--待送货  -->
+    <block wx:elif="{{currentIndex==4}}">
+      <navigator class="item" wx:for="{{all_list}}" url="detail?id={{item.id}}">
+        <view class="column-list">
+          <text class="mr">订单号：</text>
+          <text class="mr">{{item.ord_num}}</text>
+          <text wx:if="{{item.type=='help'}}" class="ml">帮我送</text>
+          <text class="ml" wx:else>帮我买</text>
+          <text class='column-item'>待送货</text>
+        </view>
+        <view class="order-info">
+          <view class="address">
+            <view class="pick">
+              <view>
+                <text class="yellow-cycle">收</text>
+              </view>
+              <text class="black3" style="flex:1">{{item.from_address}}</text>
+            </view>
+            <view class="send">
+              <text class="gray-cycle">发</text>
+              <text class="black3">{{item.to_address}}</text>
+            </view>
+          </view>
+
+        </view>
+        <view class="float-list">
+          <text class="float-item-left black3"  wx:if="{{item.isLate}}">超时{{item.remain_time}}分钟</text>
+          <text class="float-item-left black3"  wx:if="{{!item.isLate&&item.remain_time}}">剩余{{item.remain_time}}分钟</text>
+          <button class="float-item-right middle-btn-yellow" plain='false' catchtap='makePhoneCall'>联系配送员</button>
+          <button class="float-item-right middle-btn-yellow" plain='false' catchtap='reminderOrd' data-id="{{item.id}}">我要催单</button>
+        </view>
+      </navigator>
+    </block>
+    <!--已完成  -->
+    <block wx:elif="{{currentIndex==5}}">
+      <navigator class="item" wx:for="{{all_list}}" wx:if="{{item.evaluation_status=='finish'}}" url="detail1?id={{item.id}}">
+        <view class="column-list">
+          <text class="mr">订单号：</text>
+          <text class="mr">{{item.ord_num}}</text>
+          <text wx:if="{{item.type=='help'}}" class="ml">帮我送</text>
+          <text class="ml" wx:else>帮我买</text>
+          <text class='column-item'>已完成</text>
+        </view>
+        <view class="order-info">
+          <view class="address">
+            <view class="pick">
+              <view>
+                <text class="yellow-cycle">收</text>
+              </view>
+              <text class="black3">{{item.from_address}}</text>
+            </view>
+            <view class="send">
+              <text class="yellow-cycle">发</text>
+              <text class="black3">{{item.to_address}}</text>
+            </view>
+          </view>
+
+        </view>
+        <view class="float-list">
+          <text class="float-item-left yellow">已于{{item.finish_time}}送达</text>
+          <button class="float-item-right middle-btn-yellow" bindtap="addScore" data-info="{{item}}" plain='false' wx:if="{{item.evaluation_status=='wait'}}">立即评价</button>
+        </view>
+      </navigator>
+      <navigator class="item" wx:for="{{all_list}}" wx:if="{{item.evaluation_status=='wait'}}" url="../score/add?id={{item.id}}">
+        <view class="column-list">
+          <text class="mr">订单号：</text>
+          <text class="mr">{{item.ord_num}}</text>
+          <text wx:if="{{item.type=='help'}}" class="ml">帮我送</text>
+          <text class="ml" wx:else>帮我买</text>
+          <text class='column-item'>已完成</text>
+        </view>
+        <view class="order-info">
+          <view class="address">
+            <view class="pick">
+              <view>
+                <text class="yellow-cycle">收</text>
+              </view>
+              <text class="black3">{{item.from_address}}</text>
+            </view>
+            <view class="send">
+              <text class="yellow-cycle">发</text>
+              <text class="black3">{{item.to_address}}</text>
+            </view>
+          </view>
+
+        </view>
+        <view class="float-list">
+          <text class="float-item-left yellow">已于{{item.finish_time}}送达</text>
+          <button class="float-item-right middle-btn-yellow" bindtap="addScore" data-info="{{item}}" plain='false' wx:if="{{item.evaluation_status=='wait'}}">立即评价</button>
+        </view>
+      </navigator>
+    </block>
+
+  </view>
+
+
+</scroll-view>

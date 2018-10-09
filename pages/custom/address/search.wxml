@@ -1,0 +1,17 @@
+
+<view>
+  <view class="searchBox">
+  <view>
+  <input placeholder='查找地点' bindinput='searchLocation' value="{{input}}"></input>
+  <i class="sys" bindtap="camera" wx:if="{{canCamera}}"></i>
+  </view>
+  <i wx:if="{{isEmpty}}" bindtap='clearInput' class="clearInput"></i>
+  </view>
+  <view class="result-list">
+    <navigator bindtap="chooseAddress"  data-info ="{{item}}" data-id="{{id}}" class="result-item" wx:for="{{searchResult}}" >
+      <view class="title"><text>{{item.title}}</text></view>
+      <view class="address" ><text>{{item.address}}</text></view>
+    </navigator>
+  </view>
+</view>
+

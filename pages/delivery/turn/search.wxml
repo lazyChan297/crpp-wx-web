@@ -1,0 +1,23 @@
+<view>
+  <view class="searchBox">
+    <input placeholder='查找地点' bindinput='search' value="{{input}}"></input>
+    <i wx:if="{{isEmpty}}" bindtap='clearInput' class="clearInput"></i>
+  </view>
+  <view class="bgw">
+    <view class="item column-list" wx:for="{{list}}">
+        <image src="{{item.headUrl}}"></image>
+        <view class="column-item">
+          <view class="column-list">
+            <text class="black30">{{item.markiName}}</text>
+            <text class="yellow26 column-item" >{{item.workStatus==0?'（休息中）':'（开工中）'}}</text>
+            <button plain='false' class="small-btn-bgyellow" data-id="{{item.id}}" bindtap='getMarikId'>确认转移</button>
+          </view>
+          <view class="column-list" >
+            <text class="gray6 column-item txl">待取货 <text>{{item.waitGetOrd}}</text>  </text>
+            <text class="gray6 column-item txc">待送货 <text>{{item.deliveringOrd}}</text>  </text>
+            <text class="gray6 column-item txr">已完成 <text>{{item.totalFinish}}</text>  </text>
+          </view>
+        </view>
+    </view>
+  </view>
+</view>

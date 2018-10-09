@@ -1,0 +1,7 @@
+<view class="container">
+  <image src="../../images/appImg.jpg"></image>
+  <text class="black30">超人跑跑</text>
+  <view class="userinfo">
+    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" plain='false' class="large-btn-yellow"> 获取头像昵称 </button>
+    </view>
+</view>

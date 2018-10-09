@@ -1,0 +1,40 @@
+<view>
+  <view class="userInfo column-list">
+    <cover-view class="head">
+      <cover-image class="cover-image" src="{{head_url||head_url}}" />
+    </cover-view>
+    <view class="column-item">
+      <view class="name black30">{{marikInfo.marki_name}}</view>
+      <view class="float-item-left gray6">{{marikInfo.mobiletel}}</view>
+    </view>
+    <view class="float-list">
+      <view class="float-item-right" data-status="{{marikInfo.work_status==0?'1':'0'}}" bindtap='switchStatus'>{{marikInfo.work_status==0?'休息中':'开工中'}}</view>
+    </view>
+  </view>
+  <view class="column-list r-arrow ">
+    <view class="column-item">任务管理</view>
+    <navigator class="column-item txr" url='../task/map'>任务地图</navigator>
+  </view>
+  <view class="column-list">
+    <navigator class="column-item dqh" url='../task/list?currentIndex=1&status=wait_get'><text class="white30">待取货</text><text class='white40'>{{marikInfo.wait_get_ord}}</text></navigator>
+    <navigator class="column-item dsh" url='../task/list?currentIndex=2&status=delivering'><text class="white30">待送货</text><text class='white40'>{{marikInfo.delivering_ord}}</text></navigator>
+    <navigator class="column-item ywc" url='../task/list?currentIndex=3&status=finish'><text class="white30">已完成</text><text class='white40'>{{marikInfo.total_finish}}</text></navigator>
+  </view> 
+  <view class="list">
+    <navigator class="column-list r-arrow " url="../turn/list">
+      <text class="column-item turn">定向转单</text>  
+    </navigator>
+    <navigator class="column-list r-arrow" url="../statistics/statistics">
+      <text class="column-item income">收入统计</text>
+    </navigator>
+    <navigator class="column-list r-arrow" url="../statistics/payment">
+      <text class="column-item payment">货款统计</text>
+    </navigator>
+    <navigator class="column-list r-arrow" url="../help/question">
+      <text class="column-item help">帮助中心</text>
+    </navigator>
+    <navigator class="column-list r-arrow" url="../system/system">
+      <text class="column-item system">系统设置</text>
+    </navigator>
+  </view>
+</view>

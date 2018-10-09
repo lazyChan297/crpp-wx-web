@@ -1,0 +1,29 @@
+<view>
+  <form class='table'>
+    <view class="float-list"><text class="float-item-left">详细地址</text></view>
+      <view>
+      <view class="column-list r-arrow" wx:if="{{isNull}}">
+        <navigator class='column-item chooseAddress' url="search">选择地址</navigator>
+      </view>
+      <view class="column-list r-arrow" wx:else>
+        <view class="column-item hasAddress" bindtap='searchAddress'>{{areaName}}</view>
+      </view>
+      <view class="column-list">
+        <input class="column-item" placeholder='输入楼号-门牌号' placeholder-class='placeholder' value="{{address}}" bindinput='getAddress'></input>
+        <navigator class="sys" url="../../camera/camera"></navigator>
+      </view>
+    </view>
+    <view class="float-list"><text class="float-item-left">联系人信息</text></view>
+      <view>
+      <view class="column-list">
+        <input class="column-item" placeholder='输入姓名' placeholder-class='placeholder' bindinput='getName' value="{{name}}"></input>
+      </view>
+      <view class="column-list">
+        <input class="column-item" placeholder='输入手机号码' placeholder-class='placeholder' bindinput='getPhone' value="{{phone}}"></input>
+      </view>
+      </view>
+      <navigator class="large-btn-yellow" plain='false' bindtap='save'>保存</navigator>
+    
+  </form>
+</view>
+

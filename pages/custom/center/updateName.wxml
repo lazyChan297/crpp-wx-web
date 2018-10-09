@@ -1,0 +1,13 @@
+<view>
+  <form class="table">
+    <view>
+      <view class="column-list">
+        <text class="column-item">{{username}}</text>
+      </view>
+      <view class="column-list">
+        <input class="column-item" placeholder-class='placeholder' placeholder='输入新昵称' value="{{name}}" bindinput='inputChange'></input>
+      </view>
+    </view>
+    <button plain='false' hover-class='none' bindtap='save' class="large-btn-yellow">保 存</button>
+  </form>
+</view>

@@ -1,0 +1,6 @@
+<view>
+  <view class="black30">{{bean.title}}</view>
+  <view class="black26">
+    <text>{{bean.content}}</text>
+  </view>
+</view>

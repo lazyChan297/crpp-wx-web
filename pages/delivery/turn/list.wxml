@@ -1,0 +1,227 @@
+<view>
+  <view class="column-list tabList">
+    <view class="{{currentIndex==1?'column-item active':'column-item'}}" data-index="1" bindtap='switchTab'>可转任务</view>
+    <view class="{{currentIndex==2?'column-item active':'column-item'}}" data-index='2' bindtap='switchTab'>转移记录</view>
+    <view class="{{currentIndex==3?'column-item active':'column-item'}}" data-index='3' bindtap='switchTab'>接收记录</view>
+  </view>
+  <view class="list">
+    <!--可转任务  -->
+    <block wx:if="{{currentIndex==1}}">
+      <view class="item" wx:for="{{list}}">
+        <view class="column-list item-title">
+          <text class="black3">订单号：</text>
+          <text class="black3">{{item.ord_num}}</text>
+          <text class="black3 " wx:if="{{item.type=='help'}}">帮我送</text>
+          <text class="black3 " wx:else>帮我买</text>
+          <text class="yellow column-item txr" wx:if="{{item.status=='wait_get'}}">待取货</text>
+          <text class="yellow column-item txr" wx:if="{{item.status=='delivering'}}">待送货</text>
+
+        </view>
+        <view class="bgw">
+          <view class="order-info">
+            <view class="address">
+              <view class="pick">
+                <view>
+                  <text class='gray-cycle'>收</text>
+                </view>
+                <view class="center">
+                  <text class="black3">{{item.from_address}}</text>
+                  <text class="gray6 name">{{item.from_user_name}}</text>
+                  <text class="gray6">{{item.from_user_phone}}</text>
+                </view>
+              </view>
+              <view class="send">
+                <text class="gray-cycle">发</text>
+                <view class="center">
+                  <text class="black3">{{item.to_address}}</text>
+                  <text class="gray6 name">{{item.to_user_name}}</text>
+                  <text class="gray6">{{item.to_user_phone}}</text>
+                </view>
+                <text class="red28 column-item txr" wx:if="{{item.isLate}}">超时{{item.remain_time}}分钟</text>
+                <text class="yellow26 column-item txr" wx:else>剩余{{item.remain_time}}分钟</text>
+              </view>
+            </view>
+          </view>
+          <view class="remarks" wx:if="{{item.note}}">
+            <text class="yellow">备注: </text>
+            <text class="yellow">{{item.note}}</text>
+          </view>
+        </view>
+
+        <view class="float-list h90">
+          <text class="float-item-left black3">预计分成 </text>
+          <text class="red float-item-left">￥{{item.marki_user_fee}}</text>
+          <button plain='false' class="float-item-right middle-btn-yellow" data-turnStatus="{{item.status_turn}}" data-id="{{item.id}}" bindtap='turnOrd'>转移订单</button>
+        </view>
+      </view>
+      <view class="empty" wx:if="{{list.length<=0}}"></view>
+    </block>
+    <block wx:if="{{currentIndex==2}}">
+      <view class="item" wx:for="{{list}}">
+        <view class="column-list item-title">
+          <text class="black3">订单号：</text>
+          <text class="black3">{{item.ord_num}}</text>
+          <text class="black3 ">帮我送</text>
+          <text class="red28 column-item txr" wx:if="{{item.status_turn=='close'}}">转移失败</text>
+          <text class="yellow28 column-item txr" wx:if="{{item.status_turn=='wait_get'}}">转移中</text>
+          <text class="yellow28 column-item txr" wx:if="{{item.status_turn=='finish'}}">转移成功</text>
+        </view>
+        <view class="bgw">
+          <view class="order-info">
+            <view class="address">
+              <view class="pick">
+                <view>
+                  <text class='gray-cycle'>收</text>
+                </view>
+                <view class="center">
+                  <text class="black3">{{item.from_address}}</text>
+                  <text class="gray6 name">{{item.from_user_name}}</text>
+                  <text class="gray6">{{item.from_user_phone}}</text>
+                </view>
+              </view>
+              <view class="send">
+                <text class="gray-cycle">发</text>
+                <view class="center">
+                  <text class="black3">{{item.to_address}}</text>
+                  <text class="gray6 name">{{item.to_user_name}}</text>
+                  <text class="gray6">{{item.to_user_phone}}</text>
+                </view>
+                <text class="yellow26 column-item txr" wx:if="{{item.interval_time<=0}}">按时完成</text>
+                <text class="red28 column-item txr" wx:else>超时{{item.interval_time}}分钟</text>
+              </view>
+            </view>
+          </view>
+
+          <view class="remarks" wx:if="{{item.note}}">
+            <text class="yellow">备注: </text>
+            <text class="yellow">{{item.note}}</text>
+          </view>
+        </view>
+        <view class="float-list h90">
+          <text class="float-item-left black3">接收对象：</text>
+          <text class="black3 float-item-left" wx:if="{{item.ord_turn.rec}}">{{item.ord_turn.rec}}</text>
+          <text class="black3 float-item-right" wx:if="{{item.ord_turn.rec_info=='wrong'}}">有突发状况</text>
+          <text class="black3 float-item-right" wx:if="{{item.ord_turn.rec_info=='other'}}">其他</text>
+          <text class="black3 float-item-right" wx:if="{{item.ord_turn.rec_info=='nosl'}}">订单不顺路</text>
+          <text class="black3 float-item-right" wx:if="{{item.ord_turn.rec_info=='full'}}">单量太多，送不过来</text>
+          <text class="float-item-right black3" wx:if="{{item.ord_turn.rec_info}}">失败原因：</text>
+        </view>
+      </view>
+
+    </block>
+    <block wx:if="{{currentIndex==3}}">
+      <view class="item" wx:for="{{list}}" bindtap='openModal' data-info="{{item}}">
+        <view class="column-list item-title">
+          <text class="black3">订单号：</text>
+          <text class="black3">{{item.ord_num}}</text>
+          <text class="black3" wx:if="{{item.type=='buy'}}">帮我送</text>
+          <text class="black3" wx:else>帮我买</text>
+          <text class="yellow28 column-item txr" wx:if="{{item.status_turn=='wait_get'}}">等待接收</text>
+          <text class="yellow28 column-item txr" wx:if="{{item.status_turn=='close'}}">接收失败</text>
+          <text class="yellow28 column-item txr" wx:if="{{item.status_turn=='finish'}}">接收完成</text>
+        </view>
+        <view class="bgw">
+          <view class="order-info">
+            <view class="address">
+              <view class="pick">
+                <view>
+                  <text class='gray-cycle'>收</text>
+                </view>
+                <view class="center">
+                  <text class="black3">{{item.from_address}}</text>
+                  <text class="gray6 name">{{item.from_user_name}}</text>
+                  <text class="gray6">{{item.from_user_phone}}</text>
+                </view>
+              </view>
+              <view class="send">
+                <text class="gray-cycle">发</text>
+                <view class="center">
+                  <text class="black3">{{item.to_address}}</text>
+                  <text class="gray6 name">{{item.to_user_name}}</text>
+                  <text class="gray6">{{item.to_user_phone}}</text>
+                </view>
+                <text class="yellow26 column-item txr" wx:if="{{item.remain_time<=0}}">剩余{{item.remain_time}}分钟</text>
+                <text class="red28 column-item txr" wx:else>超时{{item.interval_time}}分钟</text>
+              </view>
+            </view>
+          </view>
+
+          <view class="remarks" wx:if="{{item.note}}">
+            <text class="yellow">备注: </text>
+            <text class="yellow">{{item.note}}</text>
+          </view>
+        </view>
+        <view class="float-list h90">
+          <text class="float-item-left black3" wx:if="{{status=='in'}}">转移来源：</text>
+          <text class="float-item-left black3" wx:else>接收对象：</text>
+          <text class="black3 float-item-left">{{item.marki_user}}</text>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>
+
+<view class="modal-screen" wx:if="{{modal}}" bindtap='closeModal'>
+  <view class="modal-window" catchtap='return false'>
+    <view wx:if="{{!isRefuse}}" style="background:#fff">
+      <view class="column-list h90">
+        <text class="black30">订单号：</text>
+        <text class="black30">{{ord.ord_num}}</text>
+        <text class="black30" wx:if="{{ord.type=='help'}}">帮我送</text>
+        <text class="black30" wx:else>帮我买</text>
+        <text class="txr yellow30 column-item" wx:if="{{ord.status=='wait_get'}}">待取货</text>
+        <text class="txr yellow30 column-item" wx:if="{{ord.status=='delivering'}}">待送货</text>
+      </view>
+
+      <view class="order-info">
+        <view class="address">
+          <view class="pick">
+            <view>
+              <text class='gray-cycle'>收</text>
+            </view>
+            <view class="center">
+              <text class="black3">{{ord.from_address}}</text>
+              <text class="gray6 name">{{ord.from_user_name}}</text>
+              <text class="gray6">{{ord.from_user_phone}}</text>
+            </view>
+          </view>
+          <view class="send">
+            <text class="gray-cycle">发</text>
+            <view class="center">
+              <text class="black3">{{ord.to_address}}</text>
+              <text class="gray6 name">{{ord.to_user_name}}</text>
+              <text class="gray6">{{ord.to_user_phone}}</text>
+
+            </view>
+
+          </view>
+        </view>
+
+      </view>
+      <view class="yellow30 m20" wx:if="{{ord.note}}">{{ord.note}}</view>
+      <view class="column-list button-group">
+        <button plain='false' class='column-item gray' bindtap='refuse'>拒绝接收</button>
+        <button plain='false' class='column-item yellow' bindtap='receive'>确认接收</button>
+      </view>
+    </view>
+    <view class="amount" wx:elif="{{isAmount}}">
+      <view class="h90">
+        <text class="black30">代付货款</text>
+      </view>
+      <view class="inputBox">
+        <input placeholder-class='placeholder' placeholder='请输入金额' bindinput='amountInput'></input>
+      </view>
+      <button class="large-btn-yellow" plain='false' bindtap='getAmount'>提交</button>
+    </view>
+    <view wx:else>
+      <view class='h90 black30'>请选择拒绝理由</view>
+      <view class='h90 black30' data-reason="full" bindtap='refuseOrd'>单量太多,送不过来</view>
+      <view class='h90 black30' data-reason="nosl" bindtap='refuseOrd'>单子不顺路</view>
+      <view class='h90 black30' data-reason="wrong" bindtap='refuseOrd'>有突发状况</view>
+      <view class='h90 black30' data-reason="other" bindtap='refuseOrd'>其他</view>
+      <view class='closeModal' bindtap='closeModal'></view>
+    </view>
+
+  </view>
+
+</view>

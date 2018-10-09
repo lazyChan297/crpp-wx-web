@@ -1,0 +1,26 @@
+<!--pages/custom/login/login.wxml-->
+
+<view>
+<form>
+<view>
+  <view class='column-list'>
+    <input class="column-item" placeholder='请输入手机号码' placeholder-class='placeholder' bindinput="getPhone"></input>
+  </view>
+  <view class='column-list'>
+    <input placeholder='请输入4位验证码' placeholder-class='placeholder' bindinput="getCode" class="column-item"></input> 
+    <button bindtap='sendCode'  type='mini'  plain="false" hover-class='none' class="{{disable?'small-btn-gray':'small-btn-yellow'}}">{{getCodeTxt}}</button>
+  </view>
+ </view>
+ <view>
+  <checkbox-group bindchange="checkboxChange" class="checkbox-group">
+     <label class="checkbox">
+      <checkbox value="{{agree}}" checked="true" class='wx-checkbox-input'/>
+    </label>
+  <text class="black">我已阅读并同意</text><text class="blue">《超人跑跑注册协议》</text>
+  </checkbox-group>
+  
+ </view>
+ <button bindtap='login' plain="false" hover-hover-class='none' class='large-btn-yellow'>登录</button>
+</form>
+</view> 
+

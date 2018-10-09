@@ -1,0 +1,42 @@
+<!--pages/custom/center/center.wxml-->
+<view>
+  <view class='user'>
+    <view class="left">
+    <image src="{{userInfo.headUrl}}" mode="aspectFit" background-size="cover"></image>
+    </view>
+    <view class='right'>
+      <navigator class="username" url="updateName">{{userInfo.nickName}}</navigator>
+      <text class='userphone'>{{userInfo.mobile}}</text>
+    </view>
+  </view>
+  <view class='column-list'>
+    <view class='column-item bws' bindtap='switchIndex' data-index="1">帮我送</view>
+    <view class='column-item bwm' bindtap='switchIndex' data-index='2'>帮我买</view>
+    <navigator class='column-item psy' bindtap='isDelivery'>我是配送员</navigator>
+  </view>
+  <view class='column-list r-arrow'>
+    <text class='column-item'>我的订单</text>
+    <view class='column-item orders txr' bindtap='switchTab'  data-index='1'>全部订单</view>
+  </view>
+  <view class='column-list status'>
+    <view class='column-item dfk' bindtap='switchTab' data-index='2' data-status="wait_pay">待付款
+      <text class="unread" wx:if="{{dfk}}">{{dfk}}</text>
+    </view>
+    <view class='column-item qhz' bindtap='switchTab' data-index='3' data-status="wait_get">待取货
+      <text class="unread" wx:if="{{dqh}}">{{dqh}}</text></view>
+    <view class='column-item shz' bindtap='switchTab' data-index='4' data-status="delivering">待送货
+      <text class="unread" wx:if="{{dsh}}">{{dsh}}</text>
+    </view>
+    <view class='column-item dpj' bindtap='switchTab'  data-index='5' data-status="finish">待评价
+      <text class="unread" wx:if="{{dpj}}">{{dpj}}</text>
+    </view>
+  </view>
+  <view class='row-list'>
+    <navigator class='column-list r-arrow' url='../address/pick?title=我的地址'><text class='column-item address'>我的地址</text></navigator>
+    <navigator class='column-list r-arrow' url='../score/list'><text class='column-item score'>我的评价</text></navigator>
+    <navigator bindtap='bindPhone' url="../bindPhone/bindPhone?userPhone=" class='column-list r-arrow '><text class='column-item phone'>绑定手机</text></navigator>
+    <navigator class='column-list r-arrow' url="../help/question"><text class='column-item help'>帮助中心</text></navigator>
+    <navigator class='column-list r-arrow' url="../login/agreement"><text class='column-item agreement'>用户协议</text></navigator>
+  </view>
+</view>
+

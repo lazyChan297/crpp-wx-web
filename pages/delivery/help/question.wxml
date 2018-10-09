@@ -1,0 +1,11 @@
+<!--pages/custom/help/question.wxml-->
+<view wx:for="{{lists}}" wx:for-index="index" wx:for-item="item">
+  <view class="float-list">
+    <text class="float-item-left">{{types[index]}}</text>
+  </view>
+  <view wx:for="{{item}}">
+    <view class="column-list r-arrow">
+      <navigator url="answer?num={{item.num}}&question={{item.question}}&answer={{item.answer}}" class='column-item'>{{item.question}}</navigator>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,9 @@
+<!--pages/custom/help/answer.wxml-->
+<view>
+  <view class='float-list'>
+    <text class='float-item-left'>{{question}}</text>
+  </view>
+  <view class="answer">
+    <text>{{answer}}</text>
+  </view>
+</view>

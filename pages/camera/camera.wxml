@@ -1,0 +1,3 @@
+<camera device-position="back" flash="off" binderror="error" style="width: {{camera_width}}px; height: {{camera_height-20}}px;">
+</camera>
+<button type="primary" bindtap="takePhoto" plain='false' id="large-btn-yellow">拍照</button>

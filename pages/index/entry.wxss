@@ -1,0 +1,18 @@
+image{
+  border-radius:50%;
+  width:130rpx;
+  height:130rpx;
+  display:block;
+  margin:130rpx auto 0rpx;
+}
+text{
+  display: block;
+  color:#333;
+  font-size: 30rpx;
+  text-align: center;
+  margin:30rpx auto 90rpx;
+}
+button.large-btn-yellow{
+  display: block;
+  margin:0 30rpx;
+}

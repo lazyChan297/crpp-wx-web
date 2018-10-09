@@ -1,0 +1,146 @@
+<map id="map" style="width: 100%;height:{{mapHeight}}" markers="{{markers}}" include-points="{{points}}" polyline="{{polyline}}">
+  <cover-view class=""></cover-view>
+</map>
+<view class="slideList" animation='{{animationData}}' data-isExpand="{{isExpand}}">
+  <view class="column-list list-title">
+    <view class="column-item">
+      <text class="black3">定向转单</text>
+      <text class="yellow">{{turnOrd}}</text>
+    </view>
+    <view class="column-item">
+      <text class="black3">待取货</text>
+      <text class="yellow">{{waitGet}}</text>
+    </view>
+    <view class="column-item">
+      <text class="black3">待送货</text>
+      <text class="yellow">{{delivering}}</text>
+    </view>
+    <icon class="slideButton" bindtap='slide'></icon>
+  </view>
+  
+  <scroll-view class="task-list" style='height:{{scrollViewHeight}};' scroll-y="true" bindscrolltolower="loadMore">
+    <view class="task-item" bindtap='openModal' wx:for="{{taskList}}" data-info="{{item}}" data-index="{{index}}">
+      <view class="column-list h90">
+        <text class class="{{item.reminder_flag==1?'red':' '}}">{{index+1}}</text>
+        <text class="{{item.reminder_flag==1?'red30':'black3'}}">订单号：</text>
+        <text class="{{item.reminder_flag==1?'red30':'black3'}}">{{item.ord_num}}</text>
+        <text class="{{item.reminder_flag==1?'red30 column-item':'black3 column-item'}}" wx:if="{{item.type=='help'}}">帮我送</text>
+        <text class="{{item.reminder_flag==1?'red30 column-item':'black3 column-item'}}" wx:else>帮我买</text>
+        <text class="{{item.reminder_flag==1?'red30 column-item':'yellow column-item'}}" wx:if="{{item.status=='wait_get'}}">待取货</text>
+        <text class="{{item.reminder_flag==1?'red30 column-item':'yellow column-item'}}" wx:else>待送货</text>
+      </view>
+      <view class="task-info" wx:if="{{item.status=='wait_get'}}">
+        <view>
+          <text class="black3">{{item.from_address}}</text>
+        </view>
+        <view class="column-list">
+          <text class="gray6">{{item.from_user_name}}</text>
+          <text class="gray6">{{item.from_user_phone}}</text>
+          <text class="column-item red26">{{item.mileage_total}}km</text>
+          <text class="red26" wx:if="{{item.remain_time<0}}">超时{{item.remain_time}}分钟</text>
+          <text class="gray9-26" wx:else>剩余{{item.remain_time}}分钟</text>
+        </view>
+      </view>
+      <view class="task-info" wx:if="{{item.status=='delivering'}}">
+        <view>
+          <text class="black3">{{item.to_address}}</text>
+        </view>
+        <view class="column-list">
+          <text class="gray6">{{item.to_user_name}}</text>
+          <text class="gray6">{{item.to_user_phone}}</text>
+          <text class="column-item red26">{{item.mileage_total}}km</text>
+          <text class="red26" wx:if="{{item.remain_time<0}}">超时{{item.remain_time}}分钟</text>
+          <text class="gray9-26" wx:else>剩余{{item.remain_time}}分钟</text>
+        </view>
+      </view>
+    </view>
+    <view class="empty" wx:if="{{taskList.length<=0}}"></view>
+  </scroll-view>
+
+</view>
+<checkbox-group class="checkbox-group" bindchange="checkChange">
+  <label class="checkbox">
+    <checkbox value="false" checked="true" class='{{isChecked?"checked":"unchecked"}}' />
+  </label>
+</checkbox-group>
+
+
+
+
+
+
+
+
+
+
+
+
+<cover-view class="modal-screen" wx:if="{{modal}}" bindtap='closeModal'>
+  <cover-view class="modal-window" catchtap='return false' style="background:#fff">
+    <cover-view wx:if="{{!isRefuse}}">
+      <cover-view class="column-list h90">
+        <cover-view class="h90 black28">订单号：</cover-view>
+        <cover-view class="h90 black28">{{taskInfo.ord_num}}</cover-view>
+        <cover-view class="h90 black28" wx:if="{{taskInfo.type=='help'}}">帮我送</cover-view>
+        <cover-view class="h90 black28" wx:else>帮我买</cover-view>
+        <cover-view class="h90 txr yellow28 column-item" wx:if="{{taskInfo.status=='wait_get'}}">待取货</cover-view>
+        <cover-view class="h90 txr yellow28 column-item" wx:if="{{taskInfo.status=='delivering'}}">待送货</cover-view>
+      </cover-view>
+      <cover-view class="order-info">
+        <cover-view class="address">
+          <cover-view class="pick">
+            <cover-view>
+              <cover-view class='gray-cycle'>收</cover-view>
+            </cover-view>
+            <cover-view class="center">
+              <cover-view class="black3">{{taskInfo.from_address}}</cover-view>
+              <cover-view class="gray6 name">{{taskInfo.from_user_name}}</cover-view>
+              <cover-view class="gray6 phone">{{taskInfo.from_user_phone}}</cover-view>
+              <cover-view class="yellow26" bindtap='openMap' data-type="from">导航</cover-view>
+            </cover-view>
+          </cover-view>
+          <cover-view class="send">
+            <cover-view class="gray-cycle">发</cover-view>
+            <cover-view class="center">
+              <cover-view class="black3">{{taskInfo.to_address}}</cover-view>
+              <cover-view class="gray6 name">{{taskInfo.to_user_name}}</cover-view>
+              <cover-view class="gray6 phone">{{taskInfo.to_user_phone}}</cover-view>
+              <cover-view class="yellow26" bindtap='openMap' data-type="to">导航</cover-view>
+            </cover-view>
+
+          </cover-view>
+        </cover-view>
+
+      </cover-view>
+      <cover-view class="yellow30 m20" wx:if="{{taskInfo.note}}">{{taskInfo.note}}</cover-view>
+      <cover-view class="column-list button-group" wx:if="{{taskInfo.status=='wait_get'}}">
+        <cover-view class='column-item gray' bindtap='makePhoneCall'>电话联系</cover-view>
+        <cover-view  class='column-item gray' bindtap='amountTap' wx:if="{{taskInfo.status=='wait_get'&&taskInfo.type=='buy'||openInput}}">输入货款</cover-view>
+        <cover-view class="column-item yellow" bindtap='getGoods'>完成取货</cover-view>
+      </cover-view>
+      <cover-view class="column-list button-group" wx:if="{{taskInfo.status=='delivering'}}">
+        <cover-view  class='column-item gray' bindtap='makePhoneCall'>电话联系</cover-view>
+        <cover-view plain='true' class="column-item yellow" bindtap='complete'>完成送货</cover-view>
+      </cover-view>
+    </cover-view>
+    <view class="amount" wx:elif="{{isAmount}}">
+      <view class="h90">
+        <text class="black30">代付货款</text>
+      </view>
+      <view class="inputBox">
+        <input placeholder-class='placeholder' placeholder='请输入金额' bindinput='amountInput'></input>
+      </view>
+      <button class="large-btn-yellow" plain='false' bindtap='getAmount'>提交</button>
+    </view>
+    <view wx:else>
+      <view class='h90 black30'>请选择拒绝理由</view>
+      <view class='h90 black30'>单量太多,送不过来</view>
+      <view class='h90 black30'>单子不顺路</view>
+      <view class='h90 black30'>有突发状况</view>
+      <view class='h90 black30'>其他</view>
+      <view class='closeModal'></view>
+    </view>
+
+  </cover-view>
+
+</cover-view>

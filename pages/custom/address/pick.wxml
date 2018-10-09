@@ -1,0 +1,71 @@
+<view class="searchBox">
+  <input placeholder='查找联系人姓名' placeholder-class='placeholder' bindinput='searchInput' value="{{input}}"></input>
+  <i wx:if="{{isEmpty}}" bindtap='clearInput' class="clearInput"></i>
+</view>
+<view class='address-list'>
+    <block wx:if="{{addressList.length>0||addressList[0].master==1&&master==1}}">  
+   <!-- <block wx:if="{{addressList.length>0}}"> -->
+   <!-- ||(addressList[0].master==1&&master==1)||(addressList.length>0&&addressType==1&&orderType==2) -->
+    <view class="float-list">
+      <text class="float-item-left">当前地址</text>
+      <text class='float-item-right' bindtap='editAddress' data-info="{{addressList[0]}}">编辑地址</text>
+    </view>
+    <navigator class='address-item' bindtap='chooseAddress' data-info='{{addressList[0]}}'>
+      <view>
+        <i class="ui-icon-Ylocation"></i>
+        <text class="td-single">{{addressList[0].area_name}}{{addressList[0].address}}</text>
+        <text class='td-left' wx:if="{{addressList[0].name}}">{{addressList[0].name}}</text>
+        <text class='td-right' wx:if="{{addressList[0].phone}}">{{addressList[0].phone}}</text>
+      </view>
+    </navigator>
+   </block> 
+  <block wx:elif="{{currentAddress}}">
+    <view class="float-list">
+      <text class="float-item-left">当前地址</text>
+      <text class='float-item-right'>重新定位</text>
+    </view>
+    <navigator class='address-item' bindtap='chooseAddress' data-info='{{addressList[0]}}'>
+      <view>
+        <i class="ui-icon-Ylocation"></i>
+        <text class="td-single">{{currentAddress.area_name}}{{currentAddress.address}}</text>
+        <text class='td-left'>{{currentAddress.name}}</text>
+        <text class='td-right'>{{currentAddress.phone}}</text>
+      </view>
+    </navigator>
+  </block>
+  <block wx:elif="{{masterAddressIsNull}}">
+    <view class='column-list'>
+      <text class="column-item td-single">当前无常用地址</text>
+      <navigator class="small-btn-bgyellow" url="{{setMasterUrl}}">立即设置</navigator>
+    </view>
+  </block>
+
+  </view>
+  <scroll-view class='address-list' style="height:{{pageHeight}}" scroll-y="true" bindscrolltolower="getlist" style="margin-bottom:140rpx">
+    <view>
+      <view class="float-list">
+        <text class="float-item-left">我的地址</text>
+      </view>
+      <view>
+
+        <view class="bg" wx:if="{{listIsNull}}"></view>
+        <view class='address-item' wx:for="{{addressList}}" bindtap='chooseAddress' data-info='{{item}}'>
+          <view>
+            <i class="ui-icon-location"></i>
+            <text class="td-single">{{item.area_name}}{{item.address}}</text>
+            <view class="column-list">
+              <text class='td-left'>{{item.name}}</text>
+              <text class='td-right column-item'>{{item.phone}}</text>
+                <text class='td-right' catchtap='editAddress' data-info="{{item}}">编辑</text>
+                <text class='td-right' catchtap='deleteAddress' data-id="{{item.id}}">删除</text>
+              
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    
+  </scroll-view>
+  <view class='button-group' style="position:fixed;width:100%;bottom:0;background:#fff;">
+      <navigator class="large-btn-yellow" plain='false' url='search?orderType={{orderType}}&addressType={{addressType}}&title={{title}}'>+ 新增地址</navigator>
+    </view>

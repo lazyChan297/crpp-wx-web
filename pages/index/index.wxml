@@ -1,0 +1,100 @@
+<view>
+  <!-- <view class="addressInfo bgYellow">
+    <text class="city">{{city}}</text>
+    <text class="street">{{street}}</text>
+  </view> -->
+  <!-- <map id="map" style="width: 100%; height: {{mapHeight}};" show-location> -->
+  <!-- </map> -->
+  <view class="column-list tab slide">
+    <view class="{{currentIndex==1?'column-item send active':'column-item send'}}" bindtap='slideForm' data-index="1">
+      <text class="bold">帮我送</text>
+      <text class="gray9">同城急速送达</text>
+    </view>
+    <view class="{{currentIndex==2?'column-item buy active':'column-item buy'}}" bindtap='slideForm' data-index="2">
+      <text class="bold">帮我买</text>
+      <text class="gray9">贴心服务随心购</text>
+    </view>
+  </view>
+  <form>
+    
+    <block wx:if="{{pick}}">
+      <navigator class="table-list" url="../custom/address/pick?title=选择取货地址&choose=1&orderType={{currentIndex}}&addressType=1">
+        <view class="table-item table-left">
+          <view class="cycle">收</view>
+        </view>
+        <view class='table-item'>
+          <text class='tr'>{{pick.area_name}}{{pick.address}}</text>
+          <text class="td">{{pick.name}}</text>
+          <text class="td">{{pick.phone}}</text>
+        </view>
+      </navigator>
+    </block>
+    <block wx:else>
+      <navigator class="column-list qh r-arrow" url="../custom/address/pick?title=选择取货地址&choose=1&orderType={{currentIndex}}&addressType=1">
+        <text class="column-item">选择取货地址</text>
+      </navigator>
+    </block>
+    <block wx:if="{{send}}">
+    <navigator class="table-list" url="../custom/address/pick?title=选择送货地址&choose=1&orderType={{currentIndex}}&addressType=2">
+      <view class="table-item table-left">
+        <view class="cycle">发</view>
+      </view>
+      <view class='table-item'>
+        <text class='tr'>{{send.area_name}}{{send.address}}</text>
+        <text class="td">{{send.name}}</text>
+        <text class="td">{{send.phone}}</text>
+      </view>
+    </navigator>
+    </block>
+    <block wx:else>
+    <navigator class="column-list sh r-arrow" url="../custom/address/pick?title=选择送货地址&choose=1&orderType={{currentIndex}}&addressType=2">
+      <text class="column-item">选择送货地址</text>
+    </navigator>
+    </block>
+    <block wx:if="{{!get_time}}">
+      <view class="column-list qht r-arrow">
+        <picker class='column-item' range="{{optionTime}}" mode="multiSelector" bindcolumnchange="pickerChange" bindchange="timeChange">
+          <view class="picker ">
+            请选择取货时间
+          </view>
+        </picker>
+      </view>
+    </block>
+    <block wx:else>
+      <view class="column-list r-arrow">
+        <text class="column-item txl">取货时间</text>
+        <picker class='column-item' range="{{optionTime}}" mode="multiSelector" bindcolumnchange="pickerChange" bindchange="timeChange">
+          <view class="picker txr">
+            {{get_time}}
+          </view>
+        </picker>
+      </view>
+    </block>
+    <view class='textarea'>
+      <textarea  placeholder='请输入详细要求~' placeholder-class='placeholder' bindinput='getNote' value="{{_note}}"></textarea>
+      <view class="sys" bindtap='camera'></view>
+    </view>
+    <view class="float-list">
+      <view class="float-item-left">
+        <view class="distance">
+          <text>路程</text>
+          <text><text>{{distance}}</text>公里</text>
+        </view>
+        <view>
+          <text class='cost'>配送费</text>
+          <text class='price'>￥{{cost}}</text>
+        </view>
+      </view>
+      <view class="float-item-right">
+        <button plain='false' class='middle-btn-yellow' hover-class="none" bindtap='createOrd'>立即支付</button>
+      </view>
+    </view>
+  </form>
+
+  <view class="txc">
+    <text class="rule-title" bindtap='slideRules'>配送费收费规则</text>
+  </view>
+
+  <text class="rule" wx:if="{{slideRules}}" style="text-align:left;">{{rule}}</text>
+
+</view>

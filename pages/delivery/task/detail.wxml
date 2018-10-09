@@ -1,0 +1,111 @@
+<view>
+  <view class='column-list head'>
+    <text class="black3">订单号：</text>
+    <text class="black3">2018414141</text>
+    <text class="black3" wx:if="{{taskInfo.order.type=='help'}}">帮我送</text>
+    <text class="black3" wx:else>帮我买</text>
+    
+    <text class="column-item yellow" wx:if="{{taskInfo.order.status=='wait_get'}}">待取货</text>
+    <text class="column-item yellow" wx:if="{{taskInfo.order.status=='delivering'}}">待送货</text>
+    <text class="column-item yellow" wx:if="{{taskInfo.order.status=='finish'}}">已完成</text>
+  </view>
+  <view class="bgw">
+    <view class="bgw">
+          <view class="order-info">
+            <view class="address">
+              <view class="pick">
+                <view>
+                  <text class="yellow-cycle">收</text>
+                </view>
+                <view class="center">
+                <text class="black3">{{taskInfo.fromAddr.address}}</text>
+                <text class="gray6 name">{{taskInfo.fromAddr.name}}</text>
+                <text class="gray6">{{taskInfo.fromAddr.phone}}</text>
+                </view>
+                
+              </view>
+              <view class="send">
+                <text class="yellow-cycle">发</text>
+                <view class="center">
+                <text class="black3">{{taskInfo.toAddr.address}}</text>
+                <text class="gray6 name">{{taskInfo.toAddr.name}}</text>
+                <text class="gray6">{{taskInfo.toAddr.phone}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class="remarks" wx:if="{{taskInfo.order.note}}">
+            <text class="yellow">备注: </text>
+            <text class="yellow">{{taskInfo.order.note}}</text>
+          </view>
+        </view>
+  </view>
+  <view class="bgw">
+    <view class="column-list time" wx:if="{{taskInfo.order.getTime}}">
+      <text class="black3">取货时间</text>
+      <text class="column-item gray9">{{taskInfo.order.getTime}}</text>
+    </view>
+    
+    <view class="table-list">
+      <view class="table-item">
+        <view>
+          <text class="black3">配送费：</text>
+          <text class="red">￥{{taskInfo.order.amount}}</text>
+        </view>
+        <view wx:if="{{amountDF>0}}">
+          <text class="black3">代付费：</text>
+          <text class="red">￥{{amountDF}}</text>
+        </view>
+        <view>
+          <text class="black3">配送员：</text>
+          <text class="black3">{{taskInfo.order.markiUser}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="create" wx:if="{{!isComplete}}">
+    <text class="gray6">预计分成：</text>
+    <text class="red">￥{{taskInfo.order.markifree}}</text>
+  </view>
+  <view class="table-list mb" style="padding:0;" wx:if="{{taskInfo.order.status=='finish'}}">
+    <view class="table-item" style="padding:0 30rpx;">
+      <view>
+        <text class="gray9">取货时间：</text>
+        <text class="gray9">{{taskInfo.order.getTime}}</text>
+      </view>
+      <view style="display:flex;">
+        <text class="gray9 txl">送达时间：</text>
+        <text class="gray9 txl" style="flex:1">{{taskInfo.order.finishTime}}</text>
+        <text class="gray26 txr">{{taskInfo.order.intervalTime<=0?'按时完成':'超时'+taskInfo.order.intervalTime+'分钟'}}</text>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="column-list footer" wx:if="{{!(taskInfo.order.status=='finish')}}">
+  <button plain='false' class="column-item" bindtap='makePhoneCall'>电话联系</button>
+  <button plain='false' class="column-item" bindtap='inputAmount' wx:if="{{taskInfo.order.status=='wait_get'&&taskInfo.order.type=='buy'}}">输入货款</button>
+  <button plain='false' class="column-item complete" wx:if="{{taskInfo.order.status=='wait_get'}}" bindtap='getGoods'>完成取货</button>
+  <button plain='false' class="column-item complete" wx:if="{{taskInfo.order.status=='delivering'}}" bindtap='completeTask'>完成送货</button>
+</view>
+
+<checkbox-group class="checkbox-group" bindchange="checkChange">
+  <label class="checkbox">
+    <checkbox value="false" checked="true" class='{{isChecked?"checked":"unchecked"}}' />
+  </label>
+
+</checkbox-group>
+
+<view class="modal-screen" bindtap='closeModal' wx:if="{{modal}}">
+  <view class="modal-window" catchtap='return false' style="background:#fff">
+    <view class="amount">
+      <view class="h90">
+        <text class="black30">代付货款</text>
+      </view>
+      <view class="inputBox">
+        <input placeholder-class='placeholder' placeholder='请输入金额' bindinput='amountInput'></input>
+      </view>
+      <button class="large-btn-yellow" plain='false' bindtap='goTap'>提交</button>
+    </view>
+  </view>
+  <view class="closeModal"></view>
+</view>

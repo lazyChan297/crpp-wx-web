@@ -1,0 +1,45 @@
+/* pages/camera/canvas.wxss */
+page{
+  width: 100%;
+  height: 100%;
+}
+#cover-preview{
+  width: 100%;
+  height: 100%;
+  background-color: black;
+}
+#croper{
+  position: absolute;
+  background-color: rgba(135,206,250,0.5);
+  border-radius: 20px
+}
+#operator{
+  position:fixed;
+  bottom:20rpx;
+  width:100%;
+  display:flex;
+}
+#croper-sure{
+  flex:1;
+  margin:0 20rpx;
+  background: #fcb900;
+  border:none;
+  color:#fff;
+  border-radius: 10rpx;
+  height: 70rpx;
+  line-height:70rpx;
+  text-align: center;
+  font-size: 32rpx;
+}
+#croper-cancel{
+  flex:1;
+  margin:0 20rpx;
+  background: #fff;
+  color:#fcb900;
+  border:1rpx solid #fcb900;
+  border-radius: 10rpx;
+  height: 70rpx;
+  line-height:70rpx;
+  text-align: center;
+  font-size: 32rpx;
+}

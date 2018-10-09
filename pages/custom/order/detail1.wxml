@@ -1,0 +1,37 @@
+ <view>
+  <view class="black30">服务评分</view>
+  <view class="star-list">
+    <i class="star1" wx:if="{{order.score>=1}}"></i>
+    <i class="star2" wx:if="{{order.score>=2}}"></i>
+    <i class="star3" wx:if="{{order.score>=3}}"></i>
+    <i class="star4" wx:if="{{order.score>=4}}"></i>
+    <i class="star5" wx:if="{{order.score>=5}}"></i>
+  </view>
+  <view class="yellow30">非常满意,堪称完美</view>
+  <view class="tag-list">
+    <text wx:for="{{label}}">{{item}}</text>
+    <!-- <text>非常热情</text>
+    <text>态度好</text> -->
+   </view>
+   <view class="black30">我的评价</view> 
+   <view class="yellow30">{{order.content}}</view>
+   <view class="bgw">
+<view class="column-list">
+  <text class="gray28">{{order.ord_num}}</text>
+  <text class="gray28" wx:if="{{order.type=='help'}}">帮我送</text>
+  <text class="gray28" wx:if="{{order.type=='buy'}}">帮我买</text>
+  <text class="gray28 column-item txr">配送员: </text>
+  <text class="gray28">{{order.deliverer_name}}</text>
+</view>
+<view class="order-info">
+    <view class="address">
+      <view class="pick">
+        <text class="yellow-cycle">取</text><text class="black3">{{order.address_from}}</text>
+      </view>
+      <view><text class="yellow-cycle">送</text><text class="black3">{{order.address_to}}</text></view>
+    </view>
+  </view>
+  <view class="column-list mt20"><text class="gray26">取货时间: </text><text class="gray26">{{order.get_time}}</text><text class="gray26  column-item txl">16:00-16:30</text></view>
+  <view class="column-list"><text class="gray26">送达时间: </text><text class="gray26">{{order.finish_time}}</text><text class="gray26  column-item txl">16:30</text></view>
+  </view>
+</view> 

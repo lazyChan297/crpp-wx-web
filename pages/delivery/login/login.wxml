@@ -1,0 +1,19 @@
+ 
+    <!--pages/delivery/login/login.wxml-->
+<view>
+<form>
+<view>
+  <view class='column-list'>
+    <input class="column-item" placeholder='请输入登录名' placeholder-class='placeholder' bindinput="getPhone"></input>
+  </view>
+  <view class='column-list'>
+    <input placeholder='请输入密码' password="true"  bindinput="getPassword" placeholder-class='placeholder' class="column-item"></input> 
+  </view>
+ </view>
+ <view>
+  
+ </view>
+ <navigator bindtap='login' plain="false" class='large-btn-yellow' >登录</navigator>
+</form>
+</view> 
+

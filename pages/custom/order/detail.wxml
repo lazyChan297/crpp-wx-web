@@ -1,0 +1,77 @@
+<view>
+  <view class='column-list head'>
+    <text class="black3">订单号：</text>
+    <text class="black3">{{order.order.ordNum}}</text>
+    <text class="black3" wx:if="{{order.order.type=='hlpe'}}">帮我送</text>
+    <text class="black3" wx:if="{{order.order.type=='buy'}}">帮我买</text>
+    <text class="column-item yellow" wx:if="{{order.order.status=='wait_pay'}}">待付款</text>
+    <text class="column-item yellow" wx:if="{{order.order.status=='wait_rec'}}">待派单</text>
+    <text class="column-item yellow" wx:if="{{order.order.status=='wait_get'}}">待取货</text>
+    <text class="column-item yellow" wx:if="{{order.order.status=='delivering'}}">待送货</text>
+    <text class="column-item yellow" wx:if="{{order.order.status=='finish'}}">已完成</text>
+  </view>
+  <navigator class="item" >
+        
+        <view class="order-info" >
+          <view class="address">
+            <view class="pick">
+              <view>
+                <text class="{{(order.order.status=='wait_get')||(order.order.status=='wait_pay')||(order.order.status == 'wait_rec')?'gray-cycle':'yellow-cycle'}}">收</text>
+              </view>
+              <text class="black3">{{order.fromAddr.address}}
+              <text class="name gray6">{{order.fromAddr.name}}</text>
+              <text class="gray6">{{order.fromAddr.phone}}</text>
+              </text>
+            </view>
+            <view class="send">
+              <text class="{{order.order.status=='finish'?'yellow-cycle':'gray-cycle'}}">发</text>
+              <text class="black3">{{order.toAddr.address}}
+              <text class="name gray6">{{order.toAddr.name}}</text>
+              <text class="gray6">{{order.toAddr.phone}}</text>
+              </text>
+            </view>
+          </view>
+        </view>
+        <view class="float-list" wx:if="{{order.order.status=='wait_pay'}}">
+        <button class="float-item-right middle-btn-yellow" bindtap='ordPay' plain='false'>立即付款</button>
+
+        </view>
+        <view class="float-list" wx:if="{{order.order.status=='wait_get'}}">
+        
+        <button class="float-item-right middle-btn-yellow" bindtap='makePhoneCall' data-phone="{{order.order.mobiletel}}" plain='false'>联系送货员</button>
+        <button class="float-item-right middle-btn-yellow"  plain='false' bindtap='reminderOrd'>我要催单</button>
+        </view>
+      </navigator>
+  <view class="bgw">
+    <view class="column-list time">
+      <text class="black3">取货时间</text>
+      <text class="column-item gray9">{{order.order.getTime}}</text>
+    </view>
+    <view class="column-list remarks" wx:if="{{order.order.note}}">
+      <text class="yellow">{{order.order.note}}</text>
+    </view>
+    <view class="table-list">
+      <view class="table-item">
+        <view wx:if="{{order.order.amount}}">
+          <text class="black3">配送费:</text>
+          <text class="red">￥{{order.order.amount}}</text>
+        </view>
+        <view wx:if="{{order.order.amountDf}}">
+          <text class="black3">代付费</text>
+          <text class="red">￥{{order.order.amountDf}}</text>
+        </view>
+        <view>
+          <text class="black3" wx:if="{{order.order.markiUser}}">配送员:</text>
+          <text class="black3" data-id="{{order.order.markiUserId}}">{{order.order.markiUser}}</text>
+        </view>
+      </view>
+      <view class="table-item" wx:if="{{order.order.evaluationStatus=='wait'}}">
+        <navigator class="middle-btn-yellow" url="../score/add?id={{order.order.id}}">立即评价</navigator>
+      </view>
+    </view>
+  </view>
+  <view class="create">
+    <text class="gray6">创建时间：</text>
+    <text class="gray6">{{order.order.createTime}}</text>
+  </view>
+</view>

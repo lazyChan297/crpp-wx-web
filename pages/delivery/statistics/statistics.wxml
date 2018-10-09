@@ -1,0 +1,48 @@
+<view class="column-list tabList">
+  <view class="column-item wjs">
+    <view class="float-list">
+      <text class="float-item-left white26">今日订单</text>
+      <text class="float-item-right white26">{{retMap.totalOrdsofDay}}</text>
+      
+    </view>
+    <text class="white40">￥{{retMap.totalFeeofDay}}</text>
+  </view>
+  <view class="column-item yjs">
+    <view class="float-list">
+      <text class="float-item-left white26">本周订单</text>
+      <text class="float-item-right white26">{{retMap.totalOrdsofWeek}}</text>
+    </view>
+      <text class="white40">￥{{retMap.totalFeeofWeek}}</text>
+  </view>
+  <view class="column-item all">
+    <view class="float-list">
+      <text class="float-item-left white26">本月订单</text>
+      <text class="float-item-right white26">{{retMap.totalOrdsofMonth}}</text>
+    </view>
+      <text class="white40">￥{{retMap.totalFeeofMonth}}</text>
+  </view>
+</view>
+<view>
+  <view class="column-list list-title">
+    <picker  mode="date"  start="2018-01-01" end="{{endTime}}" class="column-item" bindchange="pickerDate">
+      <text class="black30">{{date}}</text>
+    </picker>
+    <view>
+      <text class='gray6-30'>订单数</text><text class="red30">{{retMap.ordMap.ordCount}}</text>
+      <text class='gray6-30'>收入</text><text class="red30">{{retMap.ordMap.income}}</text>
+    </view>
+  </view>
+  <view class="list" wx:for="{{retMap.ordMap.ordList}}" wx:for-index="index" wx:for-item="item">
+    <view class="item">
+      <view class="column-list">
+        <text class="column-item black3">订单收入</text>
+        <text class="red">{{item.markiUserFee}}元</text>
+      </view>  
+      <view class="column-list">
+        <text class="gray9-26">订单号：</text>
+        <text class="column-item gray9-26">{{item.ordNum}}</text>
+        <text class="gray9-26">{{item.finishTime}}</text>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,40 @@
+<view style='font-weight:bold;'>logs</view>
+<navigator url="../logs/logs">logs</navigator>
+
+<view style='font-weight:bold;'>个人中心</view>
+<navigator url="../custom/login/login">登录(已完成)</navigator>
+<navigator url="../custom/login/agreement">用户协议(已完成)</navigator>
+
+<navigator url="../custom/center/updateName">修改昵称(已完成)</navigator>
+<view>地址</view>
+<navigator url="../custom/address/pick">地址管理(已完成)</navigator>
+<navigator url="../custom/address/add">编辑/添加地址 (已完成)</navigator>
+<navigator url="../custom/address/search">搜索地址 (已完成)</navigator>
+
+
+<view>订单</view>
+<navigator url="../custom/order/list">订单管理(已完成)</navigator>
+<navigator url="../custom/order/detail">订单详情-未评价(已完成)</navigator>
+<navigator url="../custom/order/detail1">订单详情-已评价(已完成)</navigator>
+
+<navigator url="../custom/score/list">评价列表(已完成)</navigator>
+<navigator url="../custom/score/add">发表评价(已完成)</navigator>
+<view style='font-weight:bold;'>其他</view>
+<navigator url="../custom/bindPhone/bindPhone">绑定手机(已完成)</navigator>
+<navigator url="../custom/help/question">帮助中心-问题(已完成)</navigator>
+<navigator url="../custom/help/answer">帮助中心-答案(已完成)</navigator>
+
+<view style='font-weight:bold;'>配送员</view>
+<navigator url='../delivery/login/login'>配送员登录（已完成）</navigator>
+<navigator url="../delivery/center/center">配送员中心(已完成)</navigator>
+<navigator url="../delivery/task/list">任务管理（已完成）</navigator>
+<navigator url="../delivery/task/detail">任务详情（已完成）</navigator>
+<navigator url="../delivery/task/map">任务地图（）</navigator>
+
+<navigator url="../delivery/system/system">系统设置(已完成)</navigator>
+<view style='font-weight:bold;'>统计</view>
+<navigator url="../delivery/statistics/payment">代付统计（已完成）</navigator>
+<navigator url="../delivery/statistics/statistics">收入统计（已完成）</navigator>
+<view style='font-weight:bold;'>定向转单</view>
+<navigator url="../delivery/turn/list">定向转单（已完成）</navigator>
+<navigator url="../delivery/turn/search">选择转单对象（已完成）</navigator>

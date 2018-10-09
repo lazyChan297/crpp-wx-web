@@ -1,0 +1,32 @@
+<!--pages/delivery/system/system.wxml-->
+<view>
+  <view>
+  <view class="column-list">
+    <text class="column-item">语音提示</text>
+    <switch name="switch" checked="{{voicePrompt}}" bindchange='voiceSwitch' color='#fcb900' class="switch"/>
+  </view>
+  </view>
+  <view class="float-list">
+    <text class="float-item-left">使用场景</text>
+  </view>
+  <view>
+    <view class="column-list">
+      <text class="column-item">收到新任务时提醒</text>
+      <switch name="switch" checked="{{newTask}}" bindchange='newTaskSwitch' color='#fcb900' class="switch" />
+    </view>
+  
+    <view class="column-list">
+      <text class="column-item">变更任务状态时提醒</text>
+      <switch name="switch" checked="{{changeTask}}" bindchange='changeTaskSwitch' color='#fcb900' class="switch" />
+    </view>
+    <view class="column-list">
+      <text class="column-item">收到定向转单时提醒</text>
+      <switch name="switch" checked="{{turnTask}}" bindchange='turnTaskSwitch' color='#fcb900' class="switch" />
+    </view>
+    <view class="column-list">
+      <text class="column-item">定向转单接收结果提醒</text>
+      <switch name="switch" checked="{{turnTaskRes}}" bindchange='turnTaskResSwitch' color='#fcb900' class="switch" />
+    </view>
+  </view>
+</view>
+
